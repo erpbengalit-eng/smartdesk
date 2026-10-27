@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SMART DESK ONLINE</title>
+<style>
+:root{color-scheme:dark;--bg:#090c12;--panel:#111722;--panel2:#151e2b;--line:#263247;--text:#edf3fb;--muted:#8d9bb0;--blue:#65b9ff;--green:#43d6a0;--purple:#b89aff;--orange:#ffbc72;--red:#ff7b86}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#152238 0,#090c12 42%);font:15px/1.5 "Segoe UI",Arial,sans-serif;color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#1b2738;color:var(--text);padding:10px 13px;border-radius:10px}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);color:#07111c;border-color:var(--blue);font-weight:700}
+.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.sidebar{background:#0b1019;border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:22px}.brand{display:flex;align-items:center;gap:12px;padding:0 8px}.brandmark{width:42px;height:42px;display:grid;place-items:center;background:#17273b;border:1px solid #2b4668;border-radius:13px;color:var(--blue);font-size:22px}.brand strong{display:block;letter-spacing:1.5px}.brand small{color:var(--muted);font-size:10px;letter-spacing:1px}.navlabel{color:#64758d;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:0 12px}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:12px;text-align:left;background:transparent;border-color:transparent;color:#aebbd0}.nav button.active,.nav button:hover{background:#172235;border-color:#263c58;color:white}.nav .ico{width:23px;text-align:center;font-size:17px}.sidebar-note{background:#111a28;border:1px solid var(--line);border-radius:13px;padding:13px;color:var(--muted);font-size:12px}
+main{padding:28px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:28px}.eyebrow{color:var(--blue);font-size:11px;font-weight:700;letter-spacing:1.6px}.topbar h1{margin:3px 0 0;font-size:28px;letter-spacing:-.5px}.topactions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.clock{color:var(--muted);font-size:13px}.searchbar{display:flex;gap:8px;margin-bottom:22px}.searchbar input{flex:1;min-width:100px}.field,input,select,textarea{background:#0c121c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:11px 12px;width:100%;outline:none}.field:focus,input:focus,select:focus,textarea:focus{border-color:var(--blue)}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:23px}.stat,.panel,.module{background:linear-gradient(145deg,#141d2a,#101620);border:1px solid var(--line);border-radius:15px}.stat{padding:17px}.stathead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.statnum{font-size:27px;font-weight:750;margin-top:12px}.staticon{font-size:20px}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.85fr);gap:16px}.panel{padding:19px;min-width:0}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.panel h2{font-size:16px;margin:0}.muted{color:var(--muted)}.modules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.module{padding:17px;cursor:pointer;transition:.15s}.module:hover{transform:translateY(-2px);border-color:#47658a}.module .mi{font-size:22px;margin-bottom:10px}.module strong{display:block}.module p{color:var(--muted);font-size:12px;margin:5px 0 0}.tag{display:inline-block;font-size:10px;border-radius:6px;padding:3px 7px;background:#17273b;color:var(--blue);margin-top:12px}.quicklist{display:grid;gap:9px}.quicklist button{text-align:left;background:#111a28}.section{display:none}.section.active{display:block}.section-title{margin:0 0 5px;font-size:25px}.section-desc{margin:0 0 20px;color:var(--muted)}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:grid;gap:6px;color:#aab8cb;font-size:12px}.formgrid .full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.tablewrap{overflow:auto;margin-top:17px;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;min-width:540px}th,td{padding:11px 12px;border-bottom:1px solid #202b3c;text-align:left;font-size:13px}th{background:#151f2e;color:#9cabc0;font-size:11px;letter-spacing:.4px}tr:last-child td{border-bottom:0}.empty{text-align:center;color:var(--muted);padding:25px}.notice{background:#111d2b;border:1px solid #263b54;padding:12px;border-radius:10px;color:#a9bdd6;font-size:12px;margin-top:16px}.counter-list{display:grid;gap:9px}.counterrow{display:flex;justify-content:space-between;padding:12px;background:#0e1520;border:1px solid #202d40;border-radius:9px}.counterrow b{color:var(--green)}.hidden{display:none!important}.toast{position:fixed;right:22px;bottom:22px;background:#182638;border:1px solid #365273;border-radius:11px;padding:13px 17px;display:none;max-width:360px;box-shadow:0 12px 40px #0008}
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:14px}.nav{grid-template-columns:repeat(3,minmax(0,1fr))}.nav button{font-size:12px;padding:8px}.navlabel,.sidebar-note{display:none}main{padding:18px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+@media(max-width:520px){.modules,.formgrid{grid-template-columns:1fr}.topbar h1{font-size:23px}.stats{gap:8px}.stat{padding:12px}.statnum{font-size:22px}.nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Neon Lamp Login gate */
+.login-overlay{position:fixed;inset:0;z-index:9999;overflow:auto;background:#0d0d0d;color:#fff;text-align:center;font-family:Arial,sans-serif;padding:12px 12px 38px;transition:background .6s}
+.login-overlay.on{background:#1e0b33}
+.login-overlay .lamp-stage{position:relative;width:260px;height:310px;max-width:90vw;margin:0 auto;padding-top:8px}
+.login-overlay .lamp-svg{width:100%;height:100%;overflow:visible;cursor:pointer}
+.login-overlay .pk,.login-overlay .cy{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke:#4a3a6a;transition:stroke .3s,filter .3s}
+.login-overlay.on .pk{stroke:#ff4fd8;filter:drop-shadow(0 0 4px #ff4fd8) drop-shadow(0 0 14px #ff4fd8);animation:loginFlick 4s infinite}
+.login-overlay.on .cy{stroke:#3df2ff;filter:drop-shadow(0 0 4px #3df2ff) drop-shadow(0 0 12px #3df2ff)}
+.login-overlay .cone{opacity:0;transition:opacity .5s}.login-overlay.on .cone{opacity:1}
+@keyframes loginFlick{0%,18%,22%,60%,64%,100%{opacity:1}20%,62%{opacity:.35}}
+.login-overlay .login-hint{color:#888;font-size:14px;margin:0 0 18px}.login-overlay.on .login-hint{color:#ff4fd8}
+.login-overlay .login-card{width:320px;max-width:92vw;box-sizing:border-box;margin:0 auto;padding:25px;background:#181820;border:1px solid #333;border-radius:12px;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(18px);transition:opacity .7s,transform .7s,box-shadow .7s,visibility .7s}
+.login-overlay.on .login-card{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);box-shadow:0 0 40px rgba(255,79,216,.4);border-color:#ff4fd8}
+.login-overlay .login-card.shake{animation:loginShake .45s}
+@keyframes loginShake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.login-overlay .login-card h2{color:#fff;margin:0 0 18px;font-size:23px}
+.login-overlay .login-card input{display:block;width:100%;box-sizing:border-box;padding:11px 12px;margin-bottom:12px;border:1px solid #3a3a52;border-radius:8px;background:#0d0d14;color:#fff;font-size:15px;outline:none}
+.login-overlay .login-card input:focus{border-color:#ff4fd8}
+.login-overlay .login-card button{width:100%;padding:11px;border:0;border-radius:8px;background:#ff4fd8;color:#1a0520;font-size:16px;font-weight:bold;cursor:pointer}
+.login-overlay #loginMsg{min-height:22px;margin:14px 0 0;font-size:14px}
+.login-overlay .login-caption{color:#777;font-size:11px;margin-top:13px}
+.app.login-locked{display:none}
+
+.login-overlay .login-card .tabs{display:flex;margin:0 0 18px;border:1px solid #3a3a52;border-radius:9px;overflow:hidden}
+.login-overlay .login-card .tabs button{flex:1;width:auto;padding:10px;border:0;border-radius:0;background:#0d0d14;color:#9a9ab0;font-size:14px;font-weight:700;cursor:pointer}
+.login-overlay .login-card .tabs button.active{background:#ff4fd8;color:#1a0520}
+.login-overlay .login-card .rem{display:flex;align-items:center;gap:8px;margin:0 0 14px;color:#b5b5c8;font-size:13px;text-align:left;cursor:pointer}
+.login-overlay .login-card input[type=checkbox]{width:auto;margin:0;display:inline-block}
+.login-overlay .login-card .forgot{display:block;margin-top:12px;color:#8a8aa6;font-size:12px;text-decoration:underline;cursor:pointer}
+.login-overlay .login-card .hide{display:none}
+.logoutbtn{margin-top:auto;text-align:left;background:#111a28;color:#ffb3c0;border-color:#3a2430}
+.logoutbtn:hover{border-color:var(--red)}
+
+.setup{max-width:520px;margin:20vh auto 0;padding:24px;background:#181820;border:1px solid #ff4fd8;border-radius:12px;color:#fff;text-align:left;font-size:14px}
+.setup code{background:#0d0d14;padding:2px 6px;border-radius:5px;color:#ffbc72}
+.pending .login-card{opacity:1;visibility:visible;pointer-events:auto;transform:none;box-shadow:0 0 40px rgba(255,79,216,.4);border-color:#ff4fd8}
+.pending .login-card button{margin-top:8px}
+.pending .login-card button.alt{background:#222;color:#fff}
+.badge{display:inline-block;font-size:11px;color:var(--green)}
+.sidebar .who{font-size:11px;color:var(--muted);word-break:break-all;padding:0 4px}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="lamp-stage">
+    <svg class="lamp-svg" id="loginLamp" viewBox="0 0 260 330" role="button" aria-label="Toggle neon lamp" tabindex="0">
+      <defs><linearGradient id="loginGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".45"/><stop offset="1" stop-color="#3df2ff" stop-opacity="0"/></linearGradient></defs>
+      <polygon class="cone" points="80,104 180,104 255,325 5,325" fill="url(#loginGlow)"/>
+      <path class="pk" d="M88 24 H172 L200 100 H60 Z"/><path class="cy" d="M130 100 V300 M80 304 Q130 288 180 304"/>
+    </svg>
+  </div>
+  <p class="login-hint" id="loginHint">Click the lamp to reveal login</p>
+  <div class="setup" id="setupBox" style="display:none"></div>
+  <form class="login-card" id="loginForm" novalidate>
+    <h2 id="loginTitle">Sign In to Smart Desk</h2>
+    <div class="tabs"><button type="button" id="tabIn" class="active">Sign In</button><button type="button" id="tabUp">Sign Up</button></div>
+    <input id="loginName" type="text" placeholder="Your name" autocomplete="name" class="hide">
+    <input id="loginEmail" type="email" placeholder="Email" autocomplete="username">
+    <input id="loginPass" type="password" placeholder="Password" autocomplete="current-password">
+    <input id="loginPass2" type="password" placeholder="Confirm password" autocomplete="new-password" class="hide">
+    <button type="submit" id="loginBtn">Sign In</button>
+    <p id="loginMsg" aria-live="polite"></p>
+    <a class="forgot" id="forgotLink">Forgot password?</a>
+    <p class="login-caption">You stay signed in on this computer until you press Logout.</p>
+  </form>
+</div>
+
+<!-- signed in but not approved yet -->
+<div class="login-overlay on pending" id="pendingBox" style="display:none">
+  <div class="lamp-stage" style="height:120px"></div>
+  <div class="login-card">
+    <h2>Waiting for approval</h2>
+    <p style="color:#bbb;font-size:14px;line-height:1.5">You are signed in as <b id="pendingEmail"></b>, but this email is not approved yet.<br><br>Ask the owner to add your email in Supabase (table <code style="color:#ffbc72">allowed_emails</code>), then press "Check again".</p>
+    <button type="button" id="pendingCheck">Check again</button>
+    <button type="button" class="alt" id="pendingOut">Logout</button>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div class="app login-locked" id="smartDeskApp">
+<aside class="sidebar">
+  <div class="brand"><div class="brandmark">✦</div><div><strong>SMART DESK</strong><small>ONLINE</small></div></div>
+  <div class="navlabel">WORKSPACE</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-page="home"><span class="ico">⌂</span>Dashboard</button>
+    <button data-page="challan"><span class="ico">▤</span>Challan Manager</button>
+    <button data-page="search"><span class="ico">⌕</span>PO / Style Search</button>
+    <button data-page="factory"><span class="ico">▦</span>Factory Counter</button>
+    <button data-page="it"><span class="ico">▣</span>IT Manager</button>
+    <button data-page="docs"><span class="ico">▥</span>Documents</button>
+    <button data-page="tasks"><span class="ico">✓</span>My Tasks</button>
+    <button data-page="notes"><span class="ico">✎</span>Quick Notes</button>
+    <button data-page="settings"><span class="ico">⇩</span>Export Data</button>
+  </nav>
+  <div class="who" id="who"></div>
+  <button class="logoutbtn" id="logoutBtn">⏻ Logout</button>
+  <div class="sidebar-note">☁ ONLINE MODE<br><br>Challans, devices and files are shared with approved staff. Tasks and notes are private to you.</div>
+</aside>
+<main>
+<header class="topbar">
+  <div><div class="eyebrow">YOUR WORKSPACE</div><h1 id="pageTitle" tabindex="-1">Good day. Let's get things done.</h1></div>
+  <div class="topactions"><span class="clock" id="clock"></span><button id="refreshBtn">↻ Refresh</button></div>
+</header>
+
+<section class="section active" id="page-home">
+  <div class="searchbar"><input id="globalSearch" placeholder="Search PO, Style, Factory…"><button class="primary" id="globalSearchBtn">Search</button></div>
+  <div class="stats">
+    <div class="stat"><div class="stathead"><span>CHALLAN RECORDS</span><span class="staticon">▤</span></div><div class="statnum" id="statChallan">0</div></div>
+    <div class="stat"><div class="stathead"><span>UNIQUE FACTORIES</span><span class="staticon">▦</span></div><div class="statnum" id="statFactory">0</div></div>
+    <div class="stat"><div class="stathead"><span>DOCUMENTS</span><span class="staticon">▥</span></div><div class="statnum" id="statDocs">0</div></div>
+    <div class="stat"><div class="stathead"><span>OPEN TASKS</span><span class="staticon">✓</span></div><div class="statnum" id="statTasks">0</div></div>
+  </div>
+  <div class="layout">
+    <div class="panel"><div class="panelhead"><h2>Workspace Modules</h2><span class="muted">QUICK ACCESS</span></div>
+      <div class="modules">
+        <div class="module" data-open="challan"><div class="mi">📋</div><strong>Challan Manager</strong><p>PO, Style, LBL, Factory and attached files.</p><span class="tag">OFFICE</span></div>
+        <div class="module" data-open="search"><div class="mi">🔎</div><strong>Smart Search</strong><p>Find records using PO or Style.</p><span class="tag">FAST SEARCH</span></div>
+        <div class="module" data-open="docs"><div class="mi">📁</div><strong>Documents</strong><p>PDF, Word and Excel files online.</p><span class="tag">FILES</span></div>
+        <div class="module" data-open="it"><div class="mi">🖥️</div><strong>IT Manager</strong><p>Computers, printers and devices.</p><span class="tag">IT SUPPORT</span></div>
+        <div class="module" data-open="tasks"><div class="mi">✅</div><strong>My Tasks</strong><p>Your private to-do list.</p><span class="tag">PERSONAL</span></div>
+        <div class="module" data-open="notes"><div class="mi">📝</div><strong>Quick Notes</strong><p>Your private notes, saved online.</p><span class="tag">NOTES</span></div>
+      </div>
+    </div>
+    <div class="panel"><div class="panelhead"><h2>Quick Actions</h2></div><div class="quicklist">
+      <button data-open="challan">＋ Add Challan Record</button><button data-open="docs">＋ Upload Document</button><button data-open="it">＋ Register IT Device</button><button data-open="tasks">＋ Add a Task</button>
+    </div><div class="notice">Data is saved online. You can open Smart Desk from any computer or phone and see the same records.</div></div>
+  </div>
+</section>
+
+<section class="section" id="page-challan">
+  <h2 class="section-title">Challan Manager</h2><p class="section-desc">Date, PO, Style, LBL, Factory and files. PO + Style together are used to flag possible duplicates.</p>
+  <form id="challanForm" class="formgrid">
+    <label>Date<input type="date" id="cDate"></label><label>PO Number *<input id="cPO" required placeholder="Enter PO number"></label>
+    <label>Style Number *<input id="cStyle" required placeholder="Enter style number"></label><label>LBL<input id="cLbl" placeholder="Label / item reference"></label>
+    <label class="full">Factory Name *<input id="cFactory" required placeholder="e.g. KAROONI, FAME, MM"></label>
+    <label class="full">Attach files (optional: PDF, Word, Excel)<input type="file" id="cFiles" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.csv"></label>
+    <div class="full actions"><button class="primary" type="submit" id="cSave">＋ Save Record</button><button type="reset">Clear Form</button></div>
+  </form>
+  <div class="tablewrap"><table><thead><tr><th>DATE</th><th>PO</th><th>STYLE</th><th>LBL</th><th>FACTORY</th><th>STATUS</th><th>FILES</th><th>ACTION</th></tr></thead><tbody id="challanRows"></tbody></table></div>
+</section>
+
+<section class="section" id="page-search">
+  <h2 class="section-title">PO / Style Search</h2><p class="section-desc">Search for a PO, Style or Factory. Results show duplicate warnings and attached files.</p>
+  <div class="searchbar"><input id="searchInput" placeholder="Type PO or Style…"><button class="primary" id="searchBtn">Search</button></div>
+  <div id="searchSummary" class="muted"></div><div class="tablewrap"><table><thead><tr><th>DATE</th><th>PO</th><th>STYLE</th><th>LBL</th><th>FACTORY</th><th>STATUS</th><th>FILES</th></tr></thead><tbody id="searchRows"></tbody></table></div>
+</section>
+
+<section class="section" id="page-factory">
+  <h2 class="section-title">Factory Counter</h2><p class="section-desc">Factory totals are calculated from all saved challan records.</p>
+  <div class="stats"><div class="stat"><div class="stathead">UNIQUE FACTORIES</div><div class="statnum" id="factoryUnique">0</div></div><div class="stat"><div class="stathead">TOTAL RECORDS</div><div class="statnum" id="factoryTotal">0</div></div></div>
+  <div class="panel"><div class="panelhead"><h2>Factory-wise Count</h2></div><div class="counter-list" id="factoryList"></div></div>
+</section>
+
+<section class="section" id="page-it">
+  <h2 class="section-title">IT Manager</h2><p class="section-desc">A shared register for PCs, laptops, printers and network devices.</p>
+  <form id="itForm" class="formgrid">
+    <label>Device Name *<input id="itName" required placeholder="e.g. Accounts PC"></label><label>Device Type<select id="itType"><option>Desktop PC</option><option>Laptop</option><option>Printer</option><option>Biometric Device</option><option>Router / Switch</option><option>Other</option></select></label>
+    <label>IP Address / Asset ID<input id="itIp" placeholder="e.g. 192.168.1.24"></label><label>Status<select id="itStatus"><option>Working</option><option>Needs Check</option><option>Under Repair</option></select></label>
+    <label class="full">Notes<input id="itNotes" placeholder="Location, issue, warranty or service details"></label>
+    <div class="full actions"><button class="primary" type="submit">＋ Save Device</button><button type="reset">Clear Form</button></div>
+  </form>
+  <div class="tablewrap"><table><thead><tr><th>DEVICE</th><th>TYPE</th><th>IP / ASSET ID</th><th>STATUS</th><th>NOTES</th><th>ACTION</th></tr></thead><tbody id="itRows"></tbody></table></div>
+</section>
+
+<section class="section" id="page-docs">
+  <h2 class="section-title">Documents</h2><p class="section-desc">Upload PDF, Word and Excel files. They are stored online and shared with approved staff. Challan files also appear here.</p>
+  <div class="panel">
+    <div id="dropZone" style="border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted)">
+      <div style="font-size:30px">📂</div>Drag &amp; drop files here, or choose them below
+      <div class="formgrid" style="margin-top:14px;text-align:left">
+        <label>Choose files (PDF, Word, Excel)<input type="file" id="docFiles" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.csv"></label>
+        <label>Category<select id="docCat"><option>Invoice</option><option>Buyer / Order</option><option>Factory</option><option>PO / Challan</option><option>IT</option><option>Personal</option><option>Other</option></select></label>
+        <label class="full">Note (optional)<input id="docNote" placeholder="e.g. Buyer ABC order sheet"></label>
+      </div>
+      <div class="actions" style="justify-content:center"><button class="primary" id="docUpload">⇧ Upload Files</button></div>
+    </div>
+  </div>
+  <div class="searchbar" style="margin-top:18px"><input id="docSearch" placeholder="Search by file name or note…"><select id="docFilter" style="width:auto;min-width:150px"><option value="">All categories</option><option>Invoice</option><option>Buyer / Order</option><option>Factory</option><option>PO / Challan</option><option>IT</option><option>Personal</option><option>Other</option></select></div>
+  <div id="docSummary" class="muted"></div>
+  <div class="tablewrap"><table><thead><tr><th>FILE</th><th>CATEGORY</th><th>SIZE</th><th>DATE</th><th>NOTE</th><th>ACTION</th></tr></thead><tbody id="docRows"></tbody></table></div>
+</section>
+
+<section class="section" id="page-tasks">
+  <h2 class="section-title">My Tasks</h2><p class="section-desc">Your private to-do list, saved online.</p>
+  <form id="taskForm" class="searchbar"><input id="taskText" required placeholder="What do you need to do?"><button class="primary">＋ Add Task</button></form>
+  <div id="taskList" class="counter-list"></div>
+</section>
+
+<section class="section" id="page-notes">
+  <h2 class="section-title">Quick Notes</h2><p class="section-desc">Your private notes. They save automatically.</p>
+  <textarea id="notesArea" rows="12" placeholder="Write reminders, ideas or office notes here…"></textarea><p class="muted" id="notesStatus">Autosave is ready.</p>
+</section>
+
+<section class="section" id="page-settings">
+  <h2 class="section-title">Export Data</h2><p class="section-desc">Download a copy of your records.</p>
+  <div class="panel"><h2>Download</h2><p class="muted">Challans open in Excel as a CSV file. The full backup is a JSON file (without the uploaded files).</p>
+  <div class="actions"><button class="primary" id="exportCsv">⇩ Challans (CSV for Excel)</button><button id="exportJson">⇩ Everything (JSON)</button></div></div>
+</section>
+<footer class="muted" style="font-size:11px;margin-top:24px">SMART DESK ONLINE • Data is stored in your Supabase project.</footer>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+/* ============================================================
+   STEP: paste your two Supabase values between the quotes.
+   Supabase > Project Settings > API
+     URL  = "Project URL"
+     KEY  = "anon public" key   (NOT the service_role key!)
+   ============================================================ */
+const CONFIG = {
+  URL: 'idmuymvrjirngwvvmdzs',
+  KEY: 'ap-southeast-1'
+};
+
+(function(){
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function toast(msg){ const el=$('toast'); el.textContent=msg; el.style.display='block'; clearTimeout(window.__tt); window.__tt=setTimeout(()=>el.style.display='none',3500); }
+  const overlay=$('loginOverlay'), lamp=$('loginLamp'), hint=$('loginHint'), form=$('loginForm'), message=$('loginMsg'), app=$('smartDeskApp');
+  const say=(t,c)=>{message.textContent=t;message.style.color=c||'#ff7b86'};
+  const shake=()=>{form.classList.remove('shake');void form.offsetWidth;form.classList.add('shake')};
+
+  /* lamp */
+  function toggleLamp(){ const on=overlay.classList.toggle('on'); hint.textContent=on?'Lamp on — sign in below':'Click the lamp to reveal login'; if(on)setTimeout(()=>$('loginEmail')?.focus(),350); }
+  lamp.addEventListener('click',toggleLamp);
+  lamp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleLamp()}});
+
+  /* config check */
+  const configured = /^https:\/\/.+/.test(CONFIG.URL) && !CONFIG.KEY.includes('PASTE_');
+  if(!configured || !window.supabase){
+    form.style.display='none'; lamp.parentElement.style.display='none'; hint.style.display='none';
+    overlay.classList.add('on');
+    const box=$('setupBox'); box.style.display='block';
+    box.innerHTML = !window.supabase
+      ? '<b>Could not load the Supabase library.</b><br><br>Check your internet connection and refresh the page.'
+      : '<b>Setup needed.</b><br><br>Open this file in Notepad and paste your Supabase <code>URL</code> and <code>KEY</code> at the top of the script (look for <code>CONFIG</code>). Then save and reload.';
+    return;
+  }
+
+  const sb = window.supabase.createClient(CONFIG.URL, CONFIG.KEY);
+  const S = { user:null, challans:[], devices:[], tasks:[], docs:[], notes:'' };
+  const ALLOWED=['pdf','doc','docx','xls','xlsx','csv'], MAX=50*1024*1024;
+  const bucket = () => sb.storage.from('documents');
+  const ext = n => { const m=/\.([^.]+)$/.exec(n||''); return m?m[1].toLowerCase():''; };
+  const fsize = b => b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB';
+  const icon = e => e==='pdf'?'📕':(e==='doc'||e==='docx')?'📘':'📗';
+  const short = n => n.length>16 ? n.slice(0,14)+'…' : n;
+  const fail = (e,what) => { console.error(what,e); toast((what?what+': ':'')+(e&&e.message?e.message:'Something went wrong')); };
+
+  /* ---------------- sign in / sign up ---------------- */
+  let mode='in', busy=false;
+  function setMode(m){
+    mode=m;
+    $('tabIn').classList.toggle('active',m==='in'); $('tabUp').classList.toggle('active',m==='up');
+    $('loginName').classList.toggle('hide',m==='in'); $('loginPass2').classList.toggle('hide',m==='in');
+    $('loginPass').autocomplete = m==='in'?'current-password':'new-password';
+    $('loginTitle').textContent = m==='in'?'Sign In to Smart Desk':'Create your account';
+    $('loginBtn').textContent = m==='in'?'Sign In':'Sign Up';
+    $('forgotLink').classList.toggle('hide',m==='up'); say('');
+  }
+  $('tabIn').addEventListener('click',()=>setMode('in'));
+  $('tabUp').addEventListener('click',()=>setMode('up'));
+
+  form.addEventListener('submit', async ev=>{
+    ev.preventDefault(); if(busy) return;
+    if(!overlay.classList.contains('on')){ overlay.classList.add('on'); hint.textContent='Lamp on — sign in below'; }
+    const name=$('loginName').value.trim(), email=$('loginEmail').value.trim(), p=$('loginPass').value, p2=$('loginPass2').value;
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ say('Please enter a valid email.'); shake(); return; }
+    if(p.length<6){ say('Password must be at least 6 characters.'); shake(); return; }
+    busy=true; $('loginBtn').disabled=true; say('Please wait…','#ffbc72');
+    try{
+      if(mode==='up'){
+        if(p!==p2){ say('Passwords do not match.'); shake(); return; }
+        const {data,error}=await sb.auth.signUp({email,password:p,options:{data:{name}}});
+        if(error){ say(error.message); shake(); return; }
+        if(data.session){ say('Account created. Opening…','#43d6a0'); await afterLogin(data.user); }
+        else { say('Account created. Check your email to confirm, then Sign In.','#43d6a0'); setMode('in'); $('loginEmail').value=email; }
+      } else {
+        const {data,error}=await sb.auth.signInWithPassword({email,password:p});
+        if(error){ say(error.message==='Invalid login credentials'?'Wrong email or password.':error.message); shake(); return; }
+        say('Login successful. Opening…','#43d6a0'); await afterLogin(data.user);
+      }
+    } finally { busy=false; $('loginBtn').disabled=false; }
+  });
+
+  $('forgotLink').addEventListener('click', async ()=>{
+    const email=$('loginEmail').value.trim();
+    if(!email){ say('Type your email above first, then click Forgot password.','#ffbc72'); return; }
+    const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.href.split('#')[0]});
+    if(error) say(error.message); else say('Password reset email sent. Check your inbox.','#43d6a0');
+  });
+  sb.auth.onAuthStateChange(async ev=>{
+    if(ev==='PASSWORD_RECOVERY'){
+      const np=prompt('Enter your new password (at least 6 characters):');
+      if(np&&np.length>=6){ const {error}=await sb.auth.updateUser({password:np}); toast(error?error.message:'Password changed.'); }
+    }
+  });
+
+  async function logout(){ try{ await sb.auth.signOut(); }catch(e){} location.reload(); }
+  $('logoutBtn').addEventListener('click',()=>{ if(confirm('Logout from Smart Desk?')) logout(); });
+  $('pendingOut').addEventListener('click',logout);
+  $('pendingCheck').addEventListener('click',()=>afterLogin(S.user));
+
+  async function afterLogin(user){
+    S.user=user;
+    const {data,error}=await sb.rpc('is_member');
+    if(error){ overlay.style.display=''; say('Setup problem: '+error.message+' (did you run setup.sql?)'); return; }
+    if(!data){ overlay.style.display='none'; $('pendingBox').style.display=''; $('pendingEmail').textContent=user.email; return; }
+    $('pendingBox').style.display='none'; overlay.style.display='none'; app.classList.remove('login-locked');
+    $('who').textContent='☁ '+(user.user_metadata&&user.user_metadata.name?user.user_metadata.name+' • ':'')+user.email;
+    await loadAll();
+  }
+
+  /* ---------------- load data ---------------- */
+  async function loadShared(){
+    const [c,d,f]=await Promise.all([
+      sb.from('challans').select('*').order('created_at',{ascending:false}),
+      sb.from('devices').select('*').order('created_at',{ascending:false}),
+      sb.from('documents').select('*').order('created_at',{ascending:false})
+    ]);
+    [c,d,f].forEach(r=>{ if(r.error) fail(r.error,'Load'); });
+    if(!c.error) S.challans=c.data||[]; if(!d.error) S.devices=d.data||[]; if(!f.error) S.docs=f.data||[];
+  }
+  async function loadAll(){
+    await loadShared();
+    const [t,n]=await Promise.all([
+      sb.from('tasks').select('*').order('created_at',{ascending:true}),
+      sb.from('notes').select('content').eq('user_id',S.user.id).maybeSingle()
+    ]);
+    if(t.error) fail(t.error,'Tasks'); else S.tasks=t.data||[];
+    if(n.error) fail(n.error,'Notes'); else S.notes=(n.data&&n.data.content)||'';
+    $('notesArea').value=S.notes;
+    renderAll();
+  }
+  $('refreshBtn').addEventListener('click', async ()=>{ await loadAll(); toast('Refreshed.'); });
+  let lastFocus=0;
+  window.addEventListener('focus',async()=>{ if(S.user&&!app.classList.contains('login-locked')&&Date.now()-lastFocus>30000){ lastFocus=Date.now(); await loadShared(); renderAll(); } });
+
+  /* ---------------- navigation ---------------- */
+  const titles={home:"Good day. Let's get things done.",challan:'Challan Manager',search:'PO / Style Search',factory:'Factory Counter',it:'IT Manager',docs:'Documents',tasks:'My Tasks',notes:'Quick Notes',settings:'Export Data'};
+  function openPage(page){
+    document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id==='page-'+page));
+    document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+    $('pageTitle').textContent=titles[page]||'SMART DESK';
+    if(page==='search') runSearch(); window.scrollTo({top:0,behavior:'smooth'});
+  }
+  $('nav').addEventListener('click',e=>{const b=e.target.closest('[data-page]');if(b)openPage(b.dataset.page)});
+  document.body.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)openPage(b.dataset.open)});
+  function tick(){const d=new Date();$('clock').textContent=d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})+' • '+d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}
+  tick(); setInterval(tick,30000);
+
+  /* ---------------- challans ---------------- */
+  const filesOf = id => S.docs.filter(d=>d.challan_id===id);
+  function filesCell(r){ const fl=filesOf(r.id); if(!fl.length) return '<span class="muted">—</span>';
+    return fl.map(f=>'<button data-open-doc="'+f.id+'" title="'+esc(f.name)+'" style="padding:4px 8px;margin:2px 4px 2px 0;font-size:12px">📎 '+esc(short(f.name))+'</button>').join(''); }
+  const same = (a,b) => a.po.trim().toLowerCase()===b.po.trim().toLowerCase() && a.style.trim().toLowerCase()===b.style.trim().toLowerCase();
+  const isDup = r => S.challans.filter(x=>same(x,r)).length>1;
+  const status = r => isDup(r)?'<span style="color:var(--orange)">⚠ DUPLICATE</span>':'<span style="color:var(--green)">OK</span>';
+
+  function renderChallans(){
+    $('challanRows').innerHTML = S.challans.length ? S.challans.map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+esc(r.po)+'</td><td>'+esc(r.style)+'</td><td>'+esc(r.lbl)+'</td><td>'+esc(r.factory)+'</td><td>'+status(r)+'</td><td>'+filesCell(r)+'</td><td><button data-del-challan="'+r.id+'">Delete</button></td></tr>').join('')
+      : '<tr><td colspan="8" class="empty">No records yet. Add your first record above.</td></tr>';
+  }
+  $('challanForm').addEventListener('submit', async e=>{
+    e.preventDefault(); const f=e.target, btn=$('cSave');
+    const r={date:$('cDate').value||null,po:$('cPO').value.trim(),style:$('cStyle').value.trim(),lbl:$('cLbl').value.trim(),factory:$('cFactory').value.trim()};
+    if(!r.po||!r.style||!r.factory) return;
+    const files=Array.from($('cFiles').files);
+    btn.disabled=true; btn.textContent='Saving…';
+    try{
+      const {data,error}=await sb.from('challans').insert([r]).select().single();
+      if(error){ fail(error,'Save'); return; }
+      S.challans.unshift(data);
+      let ok=0, skipped=0;
+      for(const file of files){
+        const row=await uploadDoc(file,{category:'PO / Challan',note:'PO '+r.po+' / Style '+r.style+' / '+r.factory,challan_id:data.id});
+        if(row) ok++; else skipped++;
+      }
+      f.reset(); renderAll();
+      let m=isDup(data)?'Saved — duplicate PO + Style detected.':'Challan record saved.';
+      if(ok) m+=' '+ok+' file(s) attached.'; if(skipped) m+=' '+skipped+' file(s) skipped.';
+      toast(m);
+    } finally { btn.disabled=false; btn.textContent='＋ Save Record'; }
+  });
+  $('challanRows').addEventListener('click', async e=>{
+    const o=e.target.closest('[data-open-doc]'); if(o){ openDoc(o.dataset.openDoc); return; }
+    const b=e.target.closest('[data-del-challan]');
+    if(b&&confirm('Delete this record and its attached files?')){
+      const id=b.dataset.delChallan, paths=filesOf(id).map(d=>d.path);
+      if(paths.length){ const {error}=await bucket().remove(paths); if(error) console.error(error); }
+      const {error}=await sb.from('challans').delete().eq('id',id);
+      if(error){ fail(error,'Delete'); return; }
+      S.challans=S.challans.filter(x=>x.id!==id); S.docs=S.docs.filter(d=>d.challan_id!==id); renderAll(); toast('Challan record deleted.');
+    }
+  });
+
+  /* search + factory */
+  function runSearch(){
+    const q=($('searchInput').value||$('globalSearch').value||'').trim().toLowerCase();
+    const found=S.challans.filter(r=>!q||r.po.toLowerCase().includes(q)||r.style.toLowerCase().includes(q)||r.factory.toLowerCase().includes(q));
+    $('searchSummary').textContent=found.length+' matching record(s)'+(q?' for “'+q+'”':'');
+    $('searchRows').innerHTML=found.length?found.map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+esc(r.po)+'</td><td>'+esc(r.style)+'</td><td>'+esc(r.lbl)+'</td><td>'+esc(r.factory)+'</td><td>'+status(r)+'</td><td>'+filesCell(r)+'</td></tr>').join(''):'<tr><td colspan="7" class="empty">No matching records found.</td></tr>';
+  }
+  $('searchBtn').addEventListener('click',runSearch);
+  $('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')runSearch()});
+  $('globalSearchBtn').addEventListener('click',()=>{$('searchInput').value=$('globalSearch').value;openPage('search');runSearch()});
+  $('globalSearch').addEventListener('keydown',e=>{if(e.key==='Enter')$('globalSearchBtn').click()});
+  $('searchRows').addEventListener('click',e=>{const o=e.target.closest('[data-open-doc]');if(o)openDoc(o.dataset.openDoc)});
+
+  function renderFactories(){
+    const counts={}; S.challans.forEach(r=>{const n=(r.factory||'').trim(); if(n)counts[n]=(counts[n]||0)+1;});
+    const sorted=Object.entries(counts).sort((a,b)=>a[0].localeCompare(b[0]));
+    $('factoryUnique').textContent=sorted.length; $('factoryTotal').textContent=S.challans.length;
+    $('factoryList').innerHTML=sorted.length?sorted.map(([n,c])=>'<div class="counterrow"><span>🏭 '+esc(n)+'</span><b>'+c+'</b></div>').join(''):'<div class="empty">Factory counts will appear after challan records are added.</div>';
+  }
+
+  /* ---------------- devices ---------------- */
+  $('itForm').addEventListener('submit', async e=>{
+    e.preventDefault(); const f=e.target;
+    const d={name:$('itName').value.trim(),type:$('itType').value,ip:$('itIp').value.trim(),status:$('itStatus').value,notes:$('itNotes').value.trim()};
+    const {data,error}=await sb.from('devices').insert([d]).select().single();
+    if(error){ fail(error,'Save'); return; }
+    S.devices.unshift(data); f.reset(); renderAll(); toast('IT device saved.');
+  });
+  function renderDevices(){
+    $('itRows').innerHTML=S.devices.length?S.devices.map(d=>'<tr><td>'+esc(d.name)+'</td><td>'+esc(d.type)+'</td><td>'+esc(d.ip)+'</td><td>'+esc(d.status)+'</td><td>'+esc(d.notes)+'</td><td><button data-del-device="'+d.id+'">Delete</button></td></tr>').join(''):'<tr><td colspan="6" class="empty">No devices registered yet.</td></tr>';
+  }
+  $('itRows').addEventListener('click', async e=>{
+    const b=e.target.closest('[data-del-device]');
+    if(b&&confirm('Delete this device?')){ const {error}=await sb.from('devices').delete().eq('id',b.dataset.delDevice); if(error){fail(error,'Delete');return}
+      S.devices=S.devices.filter(x=>x.id!==b.dataset.delDevice); renderAll(); }
+  });
+
+  /* ---------------- documents ---------------- */
+  async function uploadDoc(file,meta){
+    const e=ext(file.name);
+    if(ALLOWED.indexOf(e)<0){ toast(file.name+': file type not allowed'); return null; }
+    if(file.size>MAX){ toast(file.name+': over 50 MB'); return null; }
+    const safe=file.name.replace(/[^A-Za-z0-9._-]/g,'_');
+    const uid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2);
+    const path=uid+'/'+safe;
+    const up=await bucket().upload(path,file,{contentType:file.type||'application/octet-stream'});
+    if(up.error){ fail(up.error,'Upload '+file.name); return null; }
+    const row={name:file.name,ext:e,size:file.size,category:meta.category,note:meta.note||'',path:path,challan_id:meta.challan_id||null};
+    const {data,error}=await sb.from('documents').insert([row]).select().single();
+    if(error){ await bucket().remove([path]); fail(error,'Save file info'); return null; }
+    S.docs.unshift(data); return data;
+  }
+  async function openDoc(id){
+    const d=S.docs.find(x=>x.id===id); if(!d) return;
+    if(d.ext==='pdf'){
+      const w=window.open('','_blank');
+      const {data,error}=await bucket().createSignedUrl(d.path,300);
+      if(error||!data){ if(w)w.close(); fail(error,'Open'); return; }
+      if(w) w.location.href=data.signedUrl; else location.href=data.signedUrl;
+    } else {
+      const {data,error}=await bucket().download(d.path);
+      if(error||!data){ fail(error,'Download'); return; }
+      const url=URL.createObjectURL(data), a=document.createElement('a'); a.href=url; a.download=d.name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+    }
+  }
+  function renderDocs(){
+    const q=($('docSearch').value||'').trim().toLowerCase(), cat=$('docFilter').value;
+    const found=S.docs.filter(d=>(!cat||d.category===cat)&&(!q||d.name.toLowerCase().includes(q)||(d.note||'').toLowerCase().includes(q)));
+    const total=S.docs.reduce((s,d)=>s+(d.size||0),0);
+    $('docSummary').textContent=found.length+' of '+S.docs.length+' file(s) shown • '+fsize(total)+' used';
+    $('docRows').innerHTML=found.length?found.map(d=>'<tr><td>'+icon(d.ext)+' '+esc(d.name)+'</td><td>'+esc(d.category)+'</td><td>'+fsize(d.size||0)+'</td><td>'+esc((d.created_at||'').slice(0,10))+'</td><td>'+esc(d.note)+'</td><td><button data-open-doc="'+d.id+'">'+(d.ext==='pdf'?'Open':'Download')+'</button> <button data-del-doc="'+d.id+'">Delete</button></td></tr>').join(''):'<tr><td colspan="6" class="empty">No files yet. Upload your first document above.</td></tr>';
+  }
+  async function addFiles(files){
+    const cat=$('docCat').value, note=$('docNote').value.trim(); let ok=0;
+    const btn=$('docUpload'); btn.disabled=true; btn.textContent='Uploading…';
+    try{ for(const f of files){ if(await uploadDoc(f,{category:cat,note})) ok++; } }
+    finally{ btn.disabled=false; btn.textContent='⇧ Upload Files'; }
+    $('docFiles').value=''; $('docNote').value=''; renderAll(); if(ok) toast(ok+' file(s) uploaded.');
+  }
+  $('docUpload').addEventListener('click',()=>{ const fl=$('docFiles').files; if(!fl.length){toast('Choose one or more files first.');return} addFiles(Array.from(fl)); });
+  const dz=$('dropZone');
+  ['dragenter','dragover'].forEach(n=>dz.addEventListener(n,e=>{e.preventDefault();dz.style.borderColor='var(--blue)'}));
+  ['dragleave','drop'].forEach(n=>dz.addEventListener(n,e=>{e.preventDefault();dz.style.borderColor=''}));
+  dz.addEventListener('drop',e=>{ if(e.dataTransfer&&e.dataTransfer.files.length) addFiles(Array.from(e.dataTransfer.files)); });
+  $('docSearch').addEventListener('input',renderDocs); $('docFilter').addEventListener('change',renderDocs);
+  $('docRows').addEventListener('click', async e=>{
+    const o=e.target.closest('[data-open-doc]'), d=e.target.closest('[data-del-doc]');
+    if(o) openDoc(o.dataset.openDoc);
+    if(d&&confirm('Delete this file permanently?')){
+      const doc=S.docs.find(x=>x.id===d.dataset.delDoc); if(!doc) return;
+      await bucket().remove([doc.path]);
+      const {error}=await sb.from('documents').delete().eq('id',doc.id);
+      if(error){ fail(error,'Delete'); return; }
+      S.docs=S.docs.filter(x=>x.id!==doc.id); renderAll(); toast('File deleted.');
+    }
+  });
+
+  /* ---------------- tasks ---------------- */
+  $('taskForm').addEventListener('submit', async e=>{
+    e.preventDefault(); const text=$('taskText').value.trim(); if(!text) return;
+    const {data,error}=await sb.from('tasks').insert([{user_id:S.user.id,text}]).select().single();
+    if(error){ fail(error,'Task'); return; }
+    S.tasks.push(data); e.target.reset(); renderAll();
+  });
+  function renderTasks(){
+    $('taskList').innerHTML=S.tasks.length?S.tasks.map(t=>'<div class="counterrow"><label style="display:flex;align-items:center;gap:10px;flex:1"><input type="checkbox" data-task="'+t.id+'" '+(t.done?'checked':'')+' style="width:auto"><span style="'+(t.done?'text-decoration:line-through;color:var(--muted)':'')+'">'+esc(t.text)+'</span></label><button data-del-task="'+t.id+'">Delete</button></div>').join(''):'<div class="empty">No tasks yet. Add your first task above.</div>';
+  }
+  $('taskList').addEventListener('change', async e=>{
+    const id=e.target.dataset.task; if(!id) return; const t=S.tasks.find(x=>x.id===id); if(!t) return;
+    t.done=e.target.checked; renderAll();
+    const {error}=await sb.from('tasks').update({done:t.done}).eq('id',id); if(error) fail(error,'Task');
+  });
+  $('taskList').addEventListener('click', async e=>{
+    const b=e.target.closest('[data-del-task]'); if(!b) return;
+    const {error}=await sb.from('tasks').delete().eq('id',b.dataset.delTask); if(error){fail(error,'Task');return}
+    S.tasks=S.tasks.filter(x=>x.id!==b.dataset.delTask); renderAll();
+  });
+
+  /* ---------------- notes (autosave) ---------------- */
+  let noteTimer=null;
+  $('notesArea').addEventListener('input',()=>{
+    $('notesStatus').textContent='Saving…'; clearTimeout(noteTimer);
+    noteTimer=setTimeout(async()=>{
+      const {error}=await sb.from('notes').upsert({user_id:S.user.id,content:$('notesArea').value,updated_at:new Date().toISOString()});
+      $('notesStatus').textContent=error?'Could not save: '+error.message:'Saved online at '+new Date().toLocaleTimeString();
+    },700);
+  });
+
+  /* ---------------- export ---------------- */
+  function download(name,text,type){ const blob=new Blob([text],{type}), url=URL.createObjectURL(blob), a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); }
+  $('exportCsv').addEventListener('click',()=>{
+    const cols=['date','po','style','lbl','factory'];
+    const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+    const lines=[cols.map(q).join(',')].concat(S.challans.map(r=>cols.map(c=>q(r[c])).join(',')));
+    download('challans-'+new Date().toISOString().slice(0,10)+'.csv','\ufeff'+lines.join('\r\n'),'text/csv;charset=utf-8'); toast('CSV downloaded.');
+  });
+  $('exportJson').addEventListener('click',()=>{
+    download('smart-desk-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({challans:S.challans,devices:S.devices,tasks:S.tasks,documents:S.docs.map(d=>({name:d.name,category:d.category,note:d.note,size:d.size})),notes:S.notes},null,2),'application/json'); toast('Backup downloaded.');
+  });
+
+  /* ---------------- render all ---------------- */
+  function renderAll(){
+    renderChallans(); renderFactories(); renderDevices(); renderDocs(); renderTasks(); runSearch();
+    $('statChallan').textContent=S.challans.length;
+    $('statFactory').textContent=new Set(S.challans.map(r=>(r.factory||'').trim()).filter(Boolean)).size;
+    $('statDocs').textContent=S.docs.length;
+    $('statTasks').textContent=S.tasks.filter(t=>!t.done).length;
+  }
+
+  /* ---------------- start ---------------- */
+  (async function start(){
+    setMode('up'); setMode('in');
+    const {data}=await sb.auth.getSession();
+    if(data&&data.session){ overlay.style.display='none'; await afterLogin(data.session.user); }
+  })();
+})();
+</script>
+</body>
+</html>
